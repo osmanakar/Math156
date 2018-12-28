@@ -1,0 +1,126 @@
+\documentclass[a4paper,10pt]{article}
+\usepackage{amsmath,fullpage}
+\usepackage{amssymb,amsmath}
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage[pdftex]{graphicx}   
+\author{Osman Akar \\ 004-649-066}
+\date{October 10, 2017}
+\title{Math 156 \\ HW1 }
+\begin{document}	
+\setlength{\parindent}{4em}
+\setlength{\parskip}{1em}
+
+%\renewcommand{\baselinestretch}{2.0}
+\maketitle
+
+
+
+\section*{Task 1}
+Let's define $t=(t_1,t_2,...,t_N)^T$ and let $\textbf{Z}$ be $N$ x $(M+1)$ matrix such that $i^{\text{th}}$ row is $\textbf{z}_i$.
+We have \begin{eqnarray*}
+	\frac{\partial}{\partial w_i}J(\textbf{w})&=& \frac{1}{2}\sum_{n=1}^{N}\frac{\partial}{\partial w_i}(y(x_n,\textbf{w})-t_n)^2 \\ 
+	&=&\frac{1}{2}\sum_{n=1}^{N}2(y(x_n,\textbf{w})-t_n)\frac{\partial}{\partial w_i}(y(x_n,\textbf{w})-t_n)\\
+	&=&\sum_{n=1}^{N}(y(x_n,\textbf{w})-t_n)x_n^i	\\
+	&=&\sum_{n=1}^{N}(\textbf{z}_n\cdot \textbf{w}-t_n)x_n^i \\
+	&=& (\textbf{Z}\textbf{w}^T-t)^T\cdot (x_1^i, x_2^i,...,x_N^i)^T
+\end{eqnarray*}
+Thus we can conclude that $$\triangledown J(\textbf{w})=((\textbf{Z}\textbf{w}^T-t)^T\textbf{Z})^T=\textbf{Z}^T(\textbf{Z}\textbf{w}^T-t)$$
+so that the equation $J(\textbf{w})=0$ can be written as $\textbf{Z}^T\textbf{Z}\textbf{w}^T=\textbf{Z}^Tt$. Here we choose $A=\textbf{Z}^T\textbf{Z}$ and $b=\textbf{Z}^Tt$
+
+\section*{Task 2}
+
+We will consider two cases. 
+
+\textbf{Case 1} $ M+1\le N $
+
+Let $Z_0$ be the upper $(M+1)$x$(M+1)$ part of \textbf{Z}, so that the rows of $Z_0$ are $ \textbf{z}_1,\textbf{z}_2,...,\textbf{z}_{M+1}$. $Z_0$ is $\textit{Vardenmonde matrix}$, thus it is invertible as $x_1,x_2,...,x_{M+1}$ are pairwise different. Therefore $rank(\textbf{Z})\ge rank(Z_0)=M+1$. As an linear algebra result \footnote{see https://math.stackexchange.com/questions/349738/prove-rank-ata-rank-a-for-any-a-m-times-n}, we have $rank(A)=rank(\textbf{Z}^T\textbf{Z})=rank(\textbf{Z}) \ge M+1$. Moreover, we know that $A$ is $(M+1)$x$(M+1)$ matrix, which concludes $A$ is an invertible matrix, so the equation $A\textbf{w}^T=b$ has a unique solution.    \\ \\
+
+\textbf{Case 2} $M+1 > N$
+
+Let $Z_1$ be the leftmost $N$x$N$ part of \textbf{Z}, so that the rows of $Z_1$ are $ \hat{z}_1,\hat{z}_2,...,\hat{z}_{N}$, where $\hat{z}_i=(1,x_i,x_i^2,...,x_i^{N-1})$. Again $Z_1$ is an invertible $\textit{Vardenmonde matrix}$. Thus $\textbf{Z}$ is full column rank, thus $t$ must be in the column space of $\textbf{Z}$, which means the equation $\textbf{Z}\textbf{w}^T=t$ has at least one solution. By multiplying the previous equation with $\textbf{Z}^T$ from left, we see that \textbf{w} is also a solution of the equation $A\textbf{w}^T=b$. As $M+1>N$, there are more columns in \textbf{Z} then its rank, so the solution is not unique.  
+
+
+
+\section*{Notes on Task 4, 6 and 8}
+
+Note that the \textbf{w} are the same for $N=2k$ and $N=2k+1$, so their graphics coincide. 
+It appears that for the data set $D_1$, the higher values of $M$ gives better approximation to function.
+On the other hand, for the data set $D_2$, the values $M=7,8$ and 9 seems to give better approximation to the function. As $M$ gets closer to $N$, the approximate function passes thorough the data points, but is not the best fit for the original function. 
+
+
+
+
+%\begin{figure}
+%	\centering
+%	\includegraphics[width=0.7\linewidth]{"C:/Users/Osman/Desktop/Machine Learning/task 4 figure"}
+%	\caption{Task 4: Data Points}
+%	\label{fig:task-4-figure}
+%\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Task4-M123}
+	\caption{M=1 orange, M=2 and M=3 green, original function red}
+	\label{fig:task4-m123}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Task4-M4567}
+	\caption{M=4,5 is green, M=6,7 is black, original function is red }
+	\label{fig:task4-m4567}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Task4-M891011}
+	\caption{M=8,9 is green, M=10,11 is black, original function is red }
+	\label{fig:task4-m891011}
+\end{figure}
+
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Task7_D2}
+	\caption{Task 7: New Data Set $D_2$}
+	\label{fig:task7d2}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Task7-D2-M123}
+	\caption{M=1 is yellow, M=2 is green, M=3 is black, original function is red}
+	\label{fig:task7-d2-m123}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Task7-D2-M456}
+	\caption{M=4 is yellow, M=5 is green, M=6 is black, original function is red}
+	\label{fig:task7-d2-m456}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Task7-D2-M789}
+	\caption{M=7 is yellow, M=8 is green, M=9 is black, original function is red}
+	\label{fig:task7-d2-m789}
+\end{figure}
+
+\begin{figure}
+	\centering
+	\includegraphics[width=0.7\linewidth]{Task7-D2-M1011}
+	\caption{M=10 is green, M=11 is black, original function is red}
+	\label{fig:task7-d2-m1011}
+\end{figure}
+
+
+
+
+
+
+
+\end{document}
